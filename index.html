@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Sphere</title>
+    <!-- Add Inder font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inder&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Main Background */
+        .main-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #1a2842;
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 98px;
+            height: 67px;
+        }
+
+        .logo-text {
+            color: #6eb5d4;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the logo text */
+            letter-spacing: 1px; /* Add slight letter spacing to match the image */
+        }
+
+        .nav-links {
+        display: flex;
+        gap: 20px; /* Reduced from 30px to bring nav items closer together */
+        margin-left: 500px; /* Add this to move the entire nav section closer to the login button */
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6eb5d4;
+        }
+
+        .login-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: white;
+            color: #1a2842;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            padding-top: 0; /* Reduce this value to move content up */
+            height: calc(100vh - 120px); /* Decrease height value to move content up */
+            margin-top: -40px; /* Add negative margin to move up */
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #6eb5d4;
+            line-height: 1.2;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the main heading too */
+        }
+        .hero h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #6eb5d4;
+            line-height: 1.2;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the main heading too */
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom:20px;
+            line-height: 1.5;
+        }
+
+        .cta-btn {
+            background-color: #6eb5d4;
+            color: #1a2842;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            line-height: normal; 
+        }
+
+        .cta-btn:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-image {
+            width: 50%;
+            max-width: 500px;
+        }
+
+        .hero-image img, .hero-image svg {
+            width: 100%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%236eb5d4" fill-opacity="0.3" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 7s linear infinite;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.2;
+            animation: wave 5s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 0 30px;
+                height: auto;
+                padding-top: 50px;
+            }
+            .hero-content {
+                margin-bottom: 50px;
+            }
+            .hero-image {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="Startup Sphere Logo">
+                <span class="logo-text">STARTUP SPHERE</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Messages</a>
+                <a href="#">Add/Update</a>
+                <a href="#">Search</a>
+            </div>
+            <button class="login-btn" onclick="location.href='login.html'">Login/Sign Up</button>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Empowering Campus Startups,</h1>
+                <h2>Connecting Future Leaders!</h2>
+                <p>Showcasing student entrepreneurs, connecting founders</p>
+                <p>Building a thriving startup network right from your campus</p>
+                <button class="cta-btn" onclick="location.href='login.html'">Login/Sign Up</button>
+            </div>
+            <div class="hero-image">
+                <img src="image.png" alt="Startup Sphere Hero Image">
+            </div>
+        </section>
+
+        <!-- Wave Animation -->
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+
+    <script>
+        // Add subtle animation to wave elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make buttons functional
+            const loginButtons = document.querySelectorAll('.login-btn, .cta-btn');
+            loginButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // alert('Login/Sign Up functionality will be implemented here!');
+                });
+            });
+
+            // Add scroll effect
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const heroContent = document.querySelector('.hero-content');
+                const heroImage = document.querySelector('.hero-image');
+                
+                if (scrollPosition > 50) {
+                    heroContent.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+                    heroImage.style.transform = `translateY(-${scrollPosition * 0.05}px)`;
+                } else {
+                    heroContent.style.transform = 'translateY(0)';
+                    heroImage.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
