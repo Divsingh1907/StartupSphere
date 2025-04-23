@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Sphere</title>
+    <!-- Add Inder font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inder&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Main Background */
+        .main-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #1a2842;
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 98px;
+            height: 67px;
+        }
+
+        .logo-text {
+            color: #6eb5d4;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the logo text */
+            letter-spacing: 1px; /* Add slight letter spacing to match the image */
+        }
+
+        .nav-links {
+        display: flex;
+        gap: 20px; /* Reduced from 30px to bring nav items closer together */
+        margin-left: 500px; /* Add this to move the entire nav section closer to the login button */
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #6eb5d4;
+        }
+
+        .login-btn {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: white;
+            color: #1a2842;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            padding-top: 0; /* Reduce this value to move content up */
+            height: calc(100vh - 120px); /* Decrease height value to move content up */
+            margin-top: -40px; /* Add negative margin to move up */
+            position: relative;
+            z-index: 1; /* Lowered z-index to ensure dropdown appears above */
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #6eb5d4;
+            line-height: 1.2;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the main heading too */
+        }
+        .hero h2 {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: #6eb5d4;
+            line-height: 1.2;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the main heading too */
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom:20px;
+            line-height: 1.5;
+        }
+
+        .cta-btn {
+            background-color: #6eb5d4;
+            color: #1a2842;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            line-height: normal; 
+        }
+
+        .cta-btn:hover {
+            background-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-image {
+            width: 50%;
+            max-width: 500px;
+        }
+
+        .hero-image img, .hero-image svg {
+            width: 100%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%236eb5d4" fill-opacity="0.3" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 7s linear infinite;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.2;
+            animation: wave 5s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* User Dropdown Styles */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-display {
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            border: 2px solid white;
+            border-radius: 30px;
+            padding: 8px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .user-display:hover {
+            background-color: white;
+            color: #1a2842;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            min-width: 160px;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        /* FIX: Enhanced styles for dropdown links to ensure they're clickable */
+        .dropdown-content a {
+            color: #1a2842;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            position: relative; /* Ensure positioning context */
+            z-index: 101; /* Higher z-index to ensure clickability */
+            cursor: pointer; /* Explicit cursor */
+        }
+
+        .dropdown-content a:hover {
+            background-color: #e9e9e9;
+        }
+
+        .show-dropdown {
+            display: block;
+        }
+
+        /* Search Overlay Styles */
+        .search-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 40, 66, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .search-container {
+            width: 70%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .search-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .search-close:hover {
+            color: #6eb5d4;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid #6eb5d4;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(110, 181, 212, 0.5);
+        }
+
+        .search-suggestions {
+            position: absolute;
+            top: 60px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            color: #1a2842;
+            transition: background-color 0.3s ease;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f8ff;
+        }
+
+        .search-results {
+            width: 70%;
+            max-width: 800px;
+            margin-top: 30px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .result-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .result-title {
+            color: #6eb5d4;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-family: 'Inder', sans-serif;
+        }
+
+        .result-description {
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .result-tag {
+            background-color: rgba(110, 181, 212, 0.3);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .search-container, .search-results {
+                width: 80%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 0 30px;
+                height: auto;
+                padding-top: 50px;
+            }
+            .hero-content {
+                margin-bottom: 50px;
+            }
+            .hero-image {
+                width: 80%;
+            }
+            .search-container, .search-results {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="Startup Sphere Logo">
+                <span class="logo-text">STARTUP SPHERE</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">Messages</a>
+                <a href="viewstartup.html">Explore Startups</a>
+                <a href="#" id="searchLink">Search</a>
+            </div>
+            <button class="login-btn" id="loginButton" onclick="location.href='logincheck.html'">Hey Founder</button>
+            <div class="user-dropdown" id="userDropdown" style="display: none;">
+                <button class="user-display" id="userDisplay">
+                    <span id="username">Username</span> ▼
+                </button>
+                <div class="dropdown-content" id="dropdownContent">
+                    <a id="profileLink">Profile</a>
+                    <a id="logoutLink">Logout</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Empowering Campus Startups,</h1>
+                <h2>Connecting Future Leaders!</h2>
+                <p>Showcasing student entrepreneurs, connecting founders</p>
+                <p>Building a thriving startup network right from your campus</p>
+                <button class="cta-btn" onclick="location.href='viewstartup.html'">Explore Startups</button>
+            </div>
+            <div class="hero-image">
+                <img src="image.png" alt="Startup Sphere Hero Image">
+            </div>
+        </section>
+
+        <!-- Wave Animation -->
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="searchOverlay">
+        <div class="search-close" id="searchClose">×</div>
+        <div class="search-container">
+            <input type="text" class="search-bar" id="searchInput" placeholder="Search for startups...">
+            <div class="search-suggestions" id="searchSuggestions"></div>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Sample startup data for demonstration
+        const startups = [
+            {
+                id: 1,
+                name: "EcoTech Solutions",
+                description: "Developing sustainable technology solutions for campus waste management",
+                tags: ["Sustainability", "Tech", "Environment"]
+            },
+            {
+                id: 2,
+                name: "CampusEats",
+                description: "On-demand food delivery service exclusively for college campuses",
+                tags: ["Food", "Service", "Mobile App"]
+            },
+            {
+                id: 3,
+                name: "StudyBuddy",
+                description: "AI-powered study assistance and tutoring platform",
+                tags: ["Education", "AI", "Software"]
+            },
+            {
+                id: 4,
+                name: "GreenPower",
+                description: "Renewable energy solutions for student housing",
+                tags: ["Energy", "Sustainability", "Hardware"]
+            },
+            {
+                id: 5,
+                name: "VirtualCampus",
+                description: "AR/VR platform for virtual campus tours and events",
+                tags: ["AR/VR", "Education", "Software"]
+            },
+            {
+                id: 6,
+                name: "StudentFinance",
+                description: "Financial literacy and budgeting app for students",
+                tags: ["Finance", "Education", "Mobile App"]
+            },
+            {
+                id: 7,
+                name: "CampusMarket",
+                description: "Peer-to-peer marketplace for students to buy and sell items",
+                tags: ["Marketplace", "Service", "Mobile App"]
+            }
+        ];
+
+        // Wait for DOM to be fully loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            // Get all required elements
+            const loginButton = document.getElementById('loginButton');
+            const userDropdown = document.getElementById('userDropdown');
+            const userDisplay = document.getElementById('userDisplay');
+            const username = document.getElementById('username');
+            const dropdownContent = document.getElementById('dropdownContent');
+            const profileLink = document.getElementById('profileLink');
+            const logoutLink = document.getElementById('logoutLink');
+            
+            // Search Elements
+            const searchLink = document.getElementById('searchLink');
+            const searchOverlay = document.getElementById('searchOverlay');
+            const searchClose = document.getElementById('searchClose');
+            const searchInput = document.getElementById('searchInput');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+            const searchResults = document.getElementById('searchResults');
+            
+            // Search functionality
+            searchLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchOverlay.style.display = 'flex';
+                setTimeout(() => {
+                    searchInput.focus();
+                }, 100);
+            });
+            
+            searchClose.addEventListener('click', function() {
+                searchOverlay.style.display = 'none';
+                searchInput.value = '';
+                searchSuggestions.style.display = 'none';
+                searchResults.innerHTML = '';
+            });
+            
+            // Handle search input
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase().trim();
+                
+                // Show suggestions only if there's input
+                if (query.length > 0) {
+                    // Filter startups based on query
+                    const filteredStartups = startups.filter(startup => 
+                        startup.name.toLowerCase().includes(query) || 
+                        startup.description.toLowerCase().includes(query) ||
+                        startup.tags.some(tag => tag.toLowerCase().includes(query))
+                    );
+                    
+                    // Display suggestions
+                    if (filteredStartups.length > 0) {
+                        searchSuggestions.innerHTML = '';
+                        filteredStartups.forEach(startup => {
+                            const suggestionItem = document.createElement('div');
+                            suggestionItem.className = 'suggestion-item';
+                            suggestionItem.textContent = startup.name;
+                            suggestionItem.addEventListener('click', function() {
+                                searchInput.value = startup.name;
+                                searchSuggestions.style.display = 'none';
+                                displaySearchResults([startup]);
+                            });
+                            searchSuggestions.appendChild(suggestionItem);
+                        });
+                        searchSuggestions.style.display = 'block';
+                    } else {
+                        searchSuggestions.innerHTML = '<div class="suggestion-item">No startups found</div>';
+                        searchSuggestions.style.display = 'block';
+                    }
+                } else {
+                    searchSuggestions.style.display = 'none';
+                    searchResults.innerHTML = '';
+                }
+            });
+            
+            // Search on enter key
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value.toLowerCase().trim();
+                    if (query.length > 0) {
+                        const filteredStartups = startups.filter(startup => 
+                            startup.name.toLowerCase().includes(query) || 
+                            startup.description.toLowerCase().includes(query) ||
+                            startup.tags.some(tag => tag.toLowerCase().includes(query))
+                        );
+                        
+                        searchSuggestions.style.display = 'none';
+                        displaySearchResults(filteredStartups);
+                    }
+                }
+            });
+            
+            // Function to display search results
+            function displaySearchResults(results) {
+                searchResults.innerHTML = '';
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = '<div class="result-item"><div class="result-title">No startups found</div></div>';
+                    return;
+                }
+                
+                results.forEach(startup => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'result-item';
+                    resultItem.innerHTML = `
+                        <div class="result-title">${startup.name}</div>
+                        <div class="result-description">${startup.description}</div>
+                        <div class="result-tags">
+                            ${startup.tags.map(tag => `<span class="result-tag">${tag}</span>`).join('')}
+                        </div>
+                    `;
+                    
+                    // Make the entire result item clickable to view the startup
+                    resultItem.addEventListener('click', function() {
+                        // Redirect to startup details page
+                        window.location.href = `viewstartup.html?id=${startup.id}`;
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                });
+            }
+            
+            // Close suggestions when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target !== searchInput && e.target !== searchSuggestions) {
+                    searchSuggestions.style.display = 'none';
+                }
+            });
+            
+            // Check if authService exists and user is authenticated
+            if (typeof authService !== 'undefined' && authService.isAuthenticated()) {
+                // Get current user info
+                const currentUser = authService.getCurrentUser();
+                
+                // Hide login button and show user dropdown
+                loginButton.style.display = 'none';
+                userDropdown.style.display = 'inline-block';
+                
+                // Set username in dropdown
+                username.textContent = currentUser.name || currentUser.email;
+                
+                // Toggle dropdown when username/button is clicked
+                userDisplay.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropdownContent.classList.toggle('show-dropdown');
+                };
+                
+                // Set up profile link - FIX: Using onclick directly instead of addEventListener
+                profileLink.onclick = function() {
+                    // Alert for testing that click is registered
+                    alert('Profile clicked - will redirect to profile page');
+                    
+                    // Redirect to profile page - can be changed to your actual profile page
+                    window.location.href = 'profile.html';
+                    
+                    return false; // Prevent default behavior
+                };
+                
+                // Set up logout link - FIX: Using onclick directly instead of addEventListener
+                logoutLink.onclick = function() {
+                    // Alert for testing that click is registered
+                    alert('Logging out...');
+                    
+                    // Call logout method and redirect
+                    if (authService && typeof authService.logout === 'function') {
+                        authService.logout();
+                    }
+                    
+                    // Redirect to login page
+                    window.location.href = 'logincheck.html';
+                    
+                    return false; // Prevent default behavior
+                };
+                
+                // Close dropdown when clicking outside
+                document.onclick = function(e) {
+                    // Only close if the dropdown is open and click is outside dropdown
+                    if (dropdownContent.classList.contains('show-dropdown') && 
+                        !userDisplay.contains(e.target) && 
+                        !dropdownContent.contains(e.target)) {
+                        dropdownContent.classList.remove('show-dropdown');
+                    }
+                };
+            }
+            
+            // Add scroll effect
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const heroContent = document.querySelector('.hero-content');
+                const heroImage = document.querySelector('.hero-image');
+                
+                if (scrollPosition > 50) {
+                    heroContent.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+                    heroImage.style.transform = `translateY(-${scrollPosition * 0.05}px)`;
+                } else {
+                    heroContent.style.transform = 'translateY(0)';
+                    heroImage.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

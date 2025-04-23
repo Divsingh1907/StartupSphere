@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <!-- Add Inder font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inder&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: white;
+        }
+
+        /* Main Background */
+        .main-container {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #1a2842;
+            overflow: hidden;
+        }
+
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 98px;
+            height: 67px;
+        }
+
+        .logo-text {
+            color: #6eb5d4;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Inder', sans-serif; /* Apply Inder font to the logo text */
+            letter-spacing: 1px; /* Add slight letter spacing to match the image */
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+            padding-top: 0; /* Reduce this value to move content up */
+            height: calc(100vh - 120px); /* Decrease height value to move content up */
+            margin-top: -40px; /* Add negative margin to move up */
+            position: relative;
+            z-index: 10;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #22354f;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin-left: 200px;
+        }
+        h2 {
+            margin-bottom: 5px;
+            font-family: 'Inder', sans-serif; 
+        }
+        p {
+            color: #8fa6c9;
+            margin-top: 0;
+            font-size: 14px;
+            font-family: 'Inder', sans-serif; 
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #8fa6c9;
+            border-radius: 20px;
+            background: none;
+            color: white;
+            outline: none;
+            text-align: center;
+        }
+        select {
+            background-color: #1a2842;
+            cursor: pointer;
+        }
+        button {
+            width: 50%;
+            padding: 10px;
+            border: none;
+            background-color: #7db4d7;
+            color: white;
+            font-size: 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #5f9fbd;
+        }
+        .signin {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .signin a {
+            color: #7db4d7;
+            text-decoration: none;
+        }
+        .signin a:hover {
+            text-decoration: underline;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #ff6b6b;
+        }
+        .hero-image {
+            width: 50%;
+            max-width: 500px;
+        }
+
+        .hero-image img, .hero-image svg {
+            width: 100%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%236eb5d4" fill-opacity="0.3" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 7s linear infinite;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.2;
+            animation: wave 5s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #7db4d7;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Password Strength Indicator */
+        .password-strength {
+            margin-top: 5px;
+            display: none;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .password-strength-meter {
+            height: 5px;
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            margin-top: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .password-strength-meter-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #ff6b6b;
+            transition: width 0.3s, background-color 0.3s;
+        }
+        
+        /* Terms and Conditions Checkbox */
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .terms input {
+            width: auto;
+            margin-right: 5px;
+            margin-top: 3px;
+        }
+
+        .terms label {
+            color: #8fa6c9;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .terms a {
+            color: #7db4d7;
+            text-decoration: none;
+        }
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 0 30px;
+                height: auto;
+                padding-top: 50px;
+            }
+            .hero-content {
+                margin-bottom: 50px;
+            }
+            .hero-image {
+                width: 80%;
+            }
+            .container {
+                margin-left: 0;
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <img src="Logo.png" alt="Startup Sphere Logo">
+                <span class="logo-text">STARTUP SPHERE</span>
+            </div>
+        </nav>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h2>Create Account</h2>
+                <p>Join the Startup Sphere</p>
+                <form id="signupForm">
+                    <input type="text" id="name" placeholder="Full Name" required>
+                    <input type="email" id="email" placeholder="E-Mail Address" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <div class="password-strength" id="passwordStrength">
+                        <span id="passwordStrengthText">Password strength: Weak</span>
+                        <div class="password-strength-meter">
+                            <div class="password-strength-meter-fill" id="passwordStrengthMeter"></div>
+                        </div>
+                    </div>
+                    <select id="role" required>
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="Student">Student</option>
+                        <option value="Startup Founder">Startup Founder</option>
+                        <option value="Investor">Investor</option>
+                    </select>
+                    <div class="terms">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">I agree to the <a href="#" id="termsLink">Terms of Service</a> and <a href="#" id="privacyLink">Privacy Policy</a></label>
+                    </div>
+                    <button type="submit" id="signupButton">Sign Up</button>
+                    <div class="spinner" id="signupSpinner"></div>
+                </form>
+                <p class="message" id="message"></p>
+                <p class="signin">Already have an account? <a href="logincheck.html">Sign In</a></p>
+            </div>
+            <div class="hero-image">
+                <img src="image.png" alt="Startup Sphere Hero Image">
+            </div>
+        </section>
+
+        <!-- Wave Animation -->
+        <div class="wave-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Password strength checker
+            const passwordInput = document.getElementById("password");
+            const passwordStrength = document.getElementById("passwordStrength");
+            const passwordStrengthText = document.getElementById("passwordStrengthText");
+            const passwordStrengthMeter = document.getElementById("passwordStrengthMeter");
+            
+            passwordInput.addEventListener("input", function() {
+                const password = this.value;
+                
+                if (password.length > 0) {
+                    passwordStrength.style.display = "block";
+                    
+                    // Calculate password strength
+                    let strength = 0;
+                    
+                    // Length check
+                    if (password.length > 6) strength += 1;
+                    if (password.length > 10) strength += 1;
+                    
+                    // Complexity checks
+                    if (/[A-Z]/.test(password)) strength += 1; // Has uppercase
+                    if (/[0-9]/.test(password)) strength += 1; // Has number
+                    if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Has special char
+                    
+                    // Update UI based on strength
+                    let strengthText = "";
+                    let strengthColor = "";
+                    let strengthPercent = 0;
+                    
+                    switch(strength) {
+                        case 0:
+                        case 1:
+                            strengthText = "Weak";
+                            strengthColor = "#ff6b6b";
+                            strengthPercent = 20;
+                            break;
+                        case 2:
+                        case 3:
+                            strengthText = "Medium";
+                            strengthColor = "#ffaa33";
+                            strengthPercent = 50;
+                            break;
+                        case 4:
+                            strengthText = "Strong";
+                            strengthColor = "#77dd77";
+                            strengthPercent = 75;
+                            break;
+                        case 5:
+                            strengthText = "Very Strong";
+                            strengthColor = "#44cc44";
+                            strengthPercent = 100;
+                            break;
+                    }
+                    
+                    passwordStrengthText.innerText = `Password strength: ${strengthText}`;
+                    passwordStrengthMeter.style.width = `${strengthPercent}%`;
+                    passwordStrengthMeter.style.backgroundColor = strengthColor;
+                } else {
+                    passwordStrength.style.display = "none";
+                }
+            });
+            // Terms and privacy links
+            document.getElementById("termsLink").addEventListener("click", function(e) {
+                e.preventDefault();
+                alert("Terms of Service would open here in a modal or new page.");
+            });
+            
+            document.getElementById("privacyLink").addEventListener("click", function(e) {
+                e.preventDefault();
+                alert("Privacy Policy would open here in a modal or new page.");
+            });
+            
+            // Check if already logged in
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (currentUser) {
+                // Already logged in, redirect to dashboard
+                redirectToDashboard(currentUser.role);
+            }
+            
+            // Add scroll effect for visual elements
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const heroContent = document.querySelector('.hero-content');
+                const heroImage = document.querySelector('.hero-image');
+                
+                if (heroContent && heroImage && scrollPosition > 50) {
+                    heroContent.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+                    heroImage.style.transform = `translateY(-${scrollPosition * 0.05}px)`;
+                } else if (heroContent && heroImage) {
+                    heroContent.style.transform = 'translateY(0)';
+                    heroImage.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Form submission handler
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Show spinner, disable button
+            const signupButton = document.getElementById("signupButton");
+            const spinner = document.getElementById("signupSpinner");
+            signupButton.disabled = true;
+            spinner.style.display = "block";
+            
+            // Get form values
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const role = document.getElementById("role").value;
+            const agreeTerms = document.getElementById("agreeTerms").checked;
+            const message = document.getElementById("message");
+
+            // Clear previous messages
+            message.innerText = "";
+            
+            // Client-side validation
+            if (!validateEmail(email)) {
+                message.style.color = "#ff6b6b";
+                message.innerText = "⚠️ Please enter a valid email address.";
+                resetSignupForm();
+                return;
+            }
+            
+            if (password.length < 6) {
+                message.style.color = "#ff6b6b";
+                message.innerText = "⚠️ Password must be at least 6 characters long.";
+                resetSignupForm();
+                return;
+            }
+            
+            if (!role) {
+                message.style.color = "#ff6b6b";
+                message.innerText = "⚠️ Please select a role.";
+                resetSignupForm();
+                return;
+            }
+            
+            if (!agreeTerms) {
+                message.style.color = "#ff6b6b";
+                message.innerText = "⚠️ You must agree to the Terms and Privacy Policy.";
+                resetSignupForm();
+                return;
+            }
+
+            // Simulate network delay for realistic auth flow
+            setTimeout(() => {
+                // Load existing users
+                const users = JSON.parse(localStorage.getItem("users")) || {};
+                
+                // Check if user already exists
+                if (users[email]) {
+                    message.style.color = "#ff6b6b";
+                    message.innerText = "⚠️ Email already registered. Try logging in instead.";
+                    resetSignupForm();
+                } else {
+                    // Create new user
+                    users[email] = {
+                        name: name,
+                        password: password,  // In a real app, this would be hashed
+                        role: role,
+                        dateJoined: new Date().toISOString()
+                    };
+                    
+                    // Save to localStorage
+                    localStorage.setItem("users", JSON.stringify(users));
+                    
+                    // Set as current user
+                    const currentUser = {
+                        email: email,
+                        name: name,
+                        role: role
+                    };
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                    
+                    // Show success message
+                    message.style.color = "#4CAF50";
+                    message.innerText = "✅ Account created successfully! Redirecting...";
+                    
+                    // Redirect to appropriate dashboard after delay
+                    setTimeout(() => {
+                        redirectToDashboard(role);
+                    }, 1500);
+                }
+            }, 1000);
+        });
+
+        // Helper Functions
+        function validateEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+        
+        function resetSignupForm() {
+            const signupButton = document.getElementById("signupButton");
+            const spinner = document.getElementById("signupSpinner");
+            signupButton.disabled = false;
+            spinner.style.display = "none";
+        }
+        
+        function redirectToDashboard(role) {
+            switch(role) {
+                case "Student":
+                    window.location.href = "student_investor.html";
+                    break;
+                case "Startup Founder":
+                    window.location.href = "founder.html";
+                    break;
+                case "Investor":
+                    window.location.href = "student_investor.html";
+                    break;
+                default:
+                    window.location.href = "dashboard.html";
+            }
+        }
+    </script>
+</body>
+</html>

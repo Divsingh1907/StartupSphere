@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Startup Sphere - Student View</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inder&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #192841;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: #1a2b45;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 98px;
+            height: 67px;
+        }
+
+        .logo-text {
+            color: #6eb5d4;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Inder', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        /* Navigation Bar Styles */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            color: #7abfd6;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: #2a3d5c;
+        }
+        
+        .nav-link.active {
+            background-color: #7abfd6;
+            color: #192841;
+        }
+        
+        main {
+            flex: 1;
+            padding: 30px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #7abfd6;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        
+        .filter-container {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #2a3d5c;
+            border-radius: 10px;
+        }
+        
+        .college-filter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .filter-label {
+            font-size: 18px;
+            color: #90cfe5;
+            font-weight: 500;
+        }
+        
+        .college-select {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #4d6d9a;
+            border-radius: 5px;
+            background-color: #192841;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .college-select:focus {
+            outline: none;
+            border-color: #7abfd6;
+        }
+        
+        /* Search Bar Styles */
+        .search-container {
+            display: none;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #2a3d5c;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            position: relative;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #4d6d9a;
+            border-radius: 50px;
+            background-color: #192841;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #7abfd6;
+        }
+        
+        .search-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            margin-left: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            background-color: #90cfe5;
+        }
+        
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #192841;
+            border: 1px solid #4d6d9a;
+            border-radius: 5px;
+            margin-top: 5px;
+            z-index: 10;
+            display: none;
+        }
+        
+        .search-suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #2a3d5c;
+        }
+        
+        .search-suggestion-item:hover {
+            background-color: #2a3d5c;
+        }
+        
+        .search-suggestion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .startup-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .startup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #192841;
+            border: 2px solid #2a3d5c;
+            border-radius: 50px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .startup-item:hover {
+            border-color: #4d6d9a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .startup-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .startup-number {
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+            border: 2px solid #7abfd6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .startup-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .view-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .view-btn:hover {
+            background-color: #90cfe5;
+            transform: translateY(-2px);
+        }
+        
+        /* Wave Animation */
+        .wave-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none; 
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%236eb5d4" fill-opacity="0.3" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 7s linear infinite;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.2;
+            animation: wave 5s linear infinite;
+        }
+
+        /* Wave Keyframe Animation */
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        /* Modal for startup details view */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .detail-modal-content {
+            background-color: #2a3d5c;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .detail-header {
+            margin-bottom: 25px;
+        }
+        
+        .detail-title {
+            font-size: 28px;
+            color: #7abfd6;
+            margin-bottom: 5px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-label {
+            font-size: 16px;
+            color: #90cfe5;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 18px;
+            color: white;
+            line-height: 1.5;
+        }
+        
+        .detail-email {
+            color: #7abfd6;
+            text-decoration: none;
+        }
+        
+        .detail-email:hover {
+            text-decoration: underline;
+        }
+
+        .detail-website {
+            color: #7abfd6;
+            text-decoration: none;
+        }
+        
+        .detail-website:hover {
+            text-decoration: underline;
+        }
+        
+        .detail-date {
+            font-size: 14px;
+            color: #a0b0c5;
+            margin-top: 25px;
+            text-align: right;
+        }
+        
+        .detail-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .detail-close-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-close-btn:hover {
+            background-color: #90cfe5;
+        }
+        
+        .no-startups {
+            text-align: center;
+            color: #7abfd6;
+            font-size: 18px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .startup-item {
+                padding: 8px 15px;
+            }
+            
+            .startup-number {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .startup-name {
+                font-size: 16px;
+            }
+            
+            .view-btn {
+                padding: 8px 15px;
+                font-size: 16px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .college-filter {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .college-select {
+                width: 100%;
+            }
+            
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            
+            .search-input {
+                padding: 10px 15px;
+            }
+            
+            .search-btn {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="Logo.png" alt="Startup Sphere Logo">
+            <span class="logo-text">STARTUP SPHERE</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link" id="search-link">Search</a>
+            <a href="#" class="nav-link">About</a>
+            <a href="#" class="nav-link">Contact</a>
+        </nav>
+    </header>
+    
+    <main>
+        <h1>College Startups</h1>
+        
+        <!-- Search Bar (Initially Hidden) -->
+        <div class="search-container" id="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="search-input" placeholder="Search for startups...">
+                <button class="search-btn" id="search-btn">Search</button>
+            </div>
+            <div class="search-suggestions" id="search-suggestions"></div>
+        </div>
+        
+        <div class="filter-container">
+            <div class="college-filter">
+                <div class="filter-label">Select College:</div>
+                <select id="college-select" class="college-select">
+                    <option value="all">All Colleges</option>
+                    <option value="MIT">MIT</option>
+                    <option value="Stanford">Stanford University</option>
+                    <option value="Harvard">Harvard University</option>
+                    <option value="UC Berkeley">UC Berkeley</option>
+                    <option value="Caltech">Caltech</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="startup-list" id="startup-list">
+            <!-- Startup items will be generated here -->
+        </div>
+    </main>
+    
+    <!-- Wave Animation -->
+    <div class="wave-container">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    
+    <!-- Modal for startup details view -->
+    <div class="modal" id="detail-modal">
+        <div class="detail-modal-content">
+            <div class="detail-header">
+                <h2 class="detail-title" id="detail-title"></h2>
+                <div class="detail-college" id="detail-college"></div>
+            </div>
+            
+            <div class="detail-section">
+                <div class="detail-label">Description</div>
+                <div class="detail-value" id="detail-description"></div>
+            </div>
+            
+            <div class="detail-section" id="detail-email-section">
+                <div class="detail-label">Email</div>
+                <div class="detail-value">
+                    <a href="#" class="detail-email" id="detail-email-link"></a>
+                </div>
+            </div>
+            
+            <div class="detail-section" id="detail-website-section">
+                <div class="detail-label">Website</div>
+                <div class="detail-value">
+                    <a href="#" class="detail-website" id="detail-website-link" target="_blank"></a>
+                </div>
+            </div>
+            
+            <div class="detail-section" id="detail-funding-section">
+                <div class="detail-label">Current Funding</div>
+                <div class="detail-value" id="detail-funding"></div>
+            </div>
+            
+            <div class="detail-date" id="detail-date"></div>
+            
+            <div class="detail-actions">
+                <button class="detail-close-btn" id="detail-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sample data with college information
+        let startups = [
+            {
+                name: "EcoTech Solutions",
+                description: "Developing sustainable energy solutions for residential buildings with smart grid integration technology.",
+                email: "eco@tech.com",
+                website: "ecotechsolutions.example.com",
+                funding: "$2.5M Seed Round",
+                college: "MIT",
+                dateUpdated: new Date().toISOString()
+            },
+            {
+                name: "HealthAI",
+                description: "AI-powered health diagnostics platform that uses machine learning to predict potential health issues from regular checkup data.",
+                email: "health@tech.com",
+                website: "healthai.example.com",
+                funding: "$5M Series A",
+                college: "Stanford",
+                dateUpdated: new Date().toISOString()
+            },
+            {
+                name: "UrbanFarming",
+                description: "Vertical farming solutions for urban environments, enabling local food production with minimal water and space requirements.",
+                email: "farming@tech.com",
+                website: "urbanfarm.example.com",
+                funding: "$1.8M Angel Investment",
+                college: "Harvard",
+                dateUpdated: new Date().toISOString()
+            },
+            {
+                name: "RoboAssist",
+                description: "Developing assistive robotics for elderly care and independence enhancement.",
+                email: "contact@roboassist.com",
+                website: "roboassist.example.com",
+                funding: "$3.2M Seed Round",
+                college: "MIT",
+                dateUpdated: new Date().toISOString()
+            },
+            {
+                name: "NanoMed",
+                description: "Creating nanotechnology-based drug delivery systems for targeted cancer treatment.",
+                email: "research@nanomed.com",
+                website: "nanomed.example.com",
+                funding: "$7.5M Series A",
+                college: "Caltech",
+                dateUpdated: new Date().toISOString()
+            },
+            {
+                name: "SustainableWater",
+                description: "Water purification technology using renewable energy for developing regions.",
+                email: "info@sustainablewater.com",
+                website: "sustainablewater.example.com",
+                funding: "$1.2M Grant Funding",
+                college: "UC Berkeley",
+                dateUpdated: new Date().toISOString()
+            }
+        ];
+        
+        // Store startups in localStorage
+        if (!localStorage.getItem('collegeStartups')) {
+            localStorage.setItem('collegeStartups', JSON.stringify(startups));
+        } else {
+            startups = JSON.parse(localStorage.getItem('collegeStartups'));
+        }
+        
+        // DOM elements
+        const startupList = document.getElementById('startup-list');
+        const collegeSelect = document.getElementById('college-select');
+        const searchLink = document.getElementById('search-link');
+        const searchContainer = document.getElementById('search-container');
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const searchSuggestions = document.getElementById('search-suggestions');
+        
+        // Detail modal elements
+        const detailModal = document.getElementById('detail-modal');
+        const detailTitle = document.getElementById('detail-title');
+        const detailCollege = document.getElementById('detail-college');
+        const detailDescription = document.getElementById('detail-description');
+        const detailEmailSection = document.getElementById('detail-email-section');
+        const detailEmailLink = document.getElementById('detail-email-link');
+        const detailWebsiteSection = document.getElementById('detail-website-section');
+        const detailWebsiteLink = document.getElementById('detail-website-link');
+        const detailFundingSection = document.getElementById('detail-funding-section');
+        const detailFunding = document.getElementById('detail-funding');
+        const detailDate = document.getElementById('detail-date');
+        const detailCloseBtn = document.getElementById('detail-close-btn');
+        
+        // Display startups based on college filter
+        function displayStartups(collegeFilter = 'all', searchQuery = '') {
+            startupList.innerHTML = '';
+            
+            // Filter startups by college and search query
+            let filteredStartups = collegeFilter === 'all' 
+                ? startups 
+                : startups.filter(startup => startup.college === collegeFilter);
+            
+            // If search query is provided, further filter results
+            if (searchQuery.trim() !== '') {
+                const query = searchQuery.toLowerCase();
+                filteredStartups = filteredStartups.filter(startup => 
+                    startup.name.toLowerCase().includes(query) || 
+                    (startup.description && startup.description.toLowerCase().includes(query))
+                );
+            }
+            
+            if (filteredStartups.length === 0) {
+                const emptyMessage = document.createElement('p');
+                emptyMessage.className = 'no-startups';
+                emptyMessage.textContent = searchQuery.trim() !== '' 
+                    ? `No startups found for "${searchQuery}".` 
+                    : collegeFilter === 'all' 
+                        ? 'No startups available.' 
+                        : `No startups found for ${collegeFilter}.`;
+                startupList.appendChild(emptyMessage);
+                return;
+            }
+            
+            filteredStartups.forEach((startup, index) => {
+                const startupItem = document.createElement('div');
+                startupItem.className = 'startup-item';
+                startupItem.setAttribute('data-index', index);
+                
+                const startupLeft = document.createElement('div');
+                startupLeft.className = 'startup-left';
+                
+                const number = document.createElement('div');
+                number.className = 'startup-number';
+                number.textContent = index + 1;
+                
+                const name = document.createElement('div');
+                name.className = 'startup-name';
+                name.textContent = startup.name || 'Untitled Startup';
+                
+                const viewBtn = document.createElement('button');
+                viewBtn.className = 'view-btn';
+                viewBtn.textContent = 'View';
+                viewBtn.addEventListener('click', () => {
+                    viewStartupDetails(startup);
+                });
+                
+                startupLeft.appendChild(number);
+                startupLeft.appendChild(name);
+                
+                startupItem.appendChild(startupLeft);
+                startupItem.appendChild(viewBtn);
+                
+                // Make the entire item clickable except for the button
+                startupItem.addEventListener('click', (e) => {
+                    if (!e.target.classList.contains('view-btn')) {
+                        viewStartupDetails(startup);
+                    }
+                });
+                
+                startupList.appendChild(startupItem);
+            });
+        }
+        
+        // Search functionality
+        function handleSearch() {
+            const query = searchInput.value.trim();
+            displayStartups(collegeSelect.value, query);
+            searchSuggestions.style.display = 'none';
+        }
+        
+        // Generate search suggestions
+        function generateSuggestions(query) {
+            if (!query.trim()) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            const filteredStartups = startups.filter(startup => 
+                startup.name.toLowerCase().includes(lowerQuery)
+            );
+            
+            if (filteredStartups.length === 0) {
+                searchSuggestions.style.display = 'none';
+                return;
+            }
+            
+            searchSuggestions.innerHTML = '';
+            
+            // Limit to 5 suggestions
+            const maxSuggestions = Math.min(filteredStartups.length, 5);
+            
+            for (let i = 0; i < maxSuggestions; i++) {
+                const startup = filteredStartups[i];
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'search-suggestion-item';
+                suggestionItem.textContent = startup.name;
+                suggestionItem.addEventListener('click', () => {
+                    searchInput.value = startup.name;
+                    handleSearch();
+                });
+                searchSuggestions.appendChild(suggestionItem);
+            }
+            
+            searchSuggestions.style.display = 'block';
+        }
+        
+        // View startup details
+        function viewStartupDetails(startup) {
+            // Set detail content
+            detailTitle.textContent = startup.name || 'Untitled Startup';
+            detailCollege.textContent = startup.college ? `${startup.college}` : '';
+            detailDescription.textContent = startup.description || 'No description provided.';
+            
+            // E-mail content
+            if (startup.email && startup.email.trim() !== '') {
+                detailEmailLink.textContent = startup.email;
+                detailEmailLink.href = `mailto:${startup.email}`;
+                detailEmailSection.style.display = 'block';
+            } else {
+                detailEmailSection.style.display = 'none';
+            }
+
+            // Website
+            if (startup.website && startup.website.trim() !== '') {
+                detailWebsiteLink.textContent = startup.website;
+                detailWebsiteLink.href = startup.website.startsWith('http') ? startup.website : 'https://' + startup.website;
+                detailWebsiteSection.style.display = 'block';
+            } else {
+                detailWebsiteSection.style.display = 'none';
+            }
+            
+            // Funding
+            if (startup.funding && startup.funding.trim() !== '') {
+                detailFunding.textContent = startup.funding;
+                detailFundingSection.style.display = 'block';
+            } else {
+                detailFundingSection.style.display = 'none';
+            }
+            
+            // Date
+            if (startup.dateUpdated) {
+                const date = new Date(startup.dateUpdated);
+                detailDate.textContent = `Last updated: ${date.toLocaleDateString()} at ${date.toLocaleTimeString()}`;
+                detailDate.style.display = 'block';
+            } else {
+                detailDate.style.display = 'none';
+            }
+            
+            // Open modal
+            openDetailModal();
+        }
+        
+        // Open detail modal
+        function openDetailModal() {
+            detailModal.style.display = 'flex';
+        }
+        
+        // Close detail modal
+        function closeDetailModal() {
+            detailModal.style.display = 'none';
+        }
+        
+        // Toggle search container visibility
+        function toggleSearchContainer() {
+            if (searchContainer.style.display === 'block') {
+                searchContainer.style.display = 'none';
+                searchLink.classList.remove('active');
+            } else {
+                searchContainer.style.display = 'block';
+                searchInput.focus();
+                searchLink.classList.add('active');
+            }
+        }
+        
+        // Event listeners
+        collegeSelect.addEventListener('change', function() {
+            displayStartups(this.value, searchInput.value.trim());
+        });
+        
+        detailCloseBtn.addEventListener('click', closeDetailModal);
+        
+        // Close modal when clicking outside the content
+        window.addEventListener('click', (event) => {
+            if (event.target === detailModal) {
+                closeDetailModal();
+            }
+        });
+        
+        // Search link toggle
+        searchLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleSearchContainer();
+        });
+        
+        // Search button click
+        searchBtn.addEventListener('click', handleSearch);
+        
+        // Search on Enter key
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                handleSearch();
+            } else {
+                generateSuggestions(searchInput.value);
+            }
+        });
+        
+        // Close suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (e.target !== searchInput && e.target !== searchSuggestions) {
+                searchSuggestions.style.display = 'none';
+            }
+        });
+        
+        // Populate college dropdown dynamically from data
+        function populateCollegeOptions() {
+            // Get unique colleges
+            const colleges = [...new Set(startups.map(startup => startup.college))];
+            
+            // Clear existing options except "All Colleges"
+            while (collegeSelect.options.length > 1) {
+                collegeSelect.remove(1);
+            }
+            
+            // Add college options
+            colleges.forEach(college => {
+                if (college) {
+                    const option = document.createElement('option');
+                    option.value = college;
+                    option.textContent = college;
+                    collegeSelect.appendChild(option);
+                }
+            });
+        }
+        
+        // Initialize
+        populateCollegeOptions();
+        displayStartups();
+    </script>
+</body>
+</html>

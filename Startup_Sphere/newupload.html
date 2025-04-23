@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Sphere</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inder&display=swap" rel="stylesheet">
+  <style>
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #192841;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background-color: #1a2b45;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 98px;
+            height: 67px;
+        }
+
+        .logo-text {
+            color: #6eb5d4;
+            font-size: 24px;
+            font-weight: bold;
+            font-family: 'Inder', sans-serif; 
+            letter-spacing: 1px; /* Add slight letter spacing to match the image */
+        }
+        
+        main {
+            flex: 1;
+            padding: 30px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #7abfd6;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        
+        .startup-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .startup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #192841;
+            border: 2px solid #2a3d5c;
+            border-radius: 50px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .startup-item:hover {
+            border-color: #4d6d9a;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .startup-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+        
+        .startup-number {
+            width: 50px;
+            height: 50px;
+            background-color: transparent;
+            border: 2px solid #7abfd6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .startup-name {
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .edit-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .edit-btn:hover {
+            background-color: #90cfe5;
+            transform: translateY(-2px);
+        }
+        
+        .add-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            align-self: center;
+            transition: all 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            background-color: #90cfe5;
+            transform: translateY(-2px);
+        }
+        
+        /* Wave Animation */
+        .wave-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none; 
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%236eb5d4" fill-opacity="0.3" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,245.3C1248,256,1344,224,1392,208L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-repeat: repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        .wave:nth-child(2) {
+            bottom: 10px;
+            opacity: 0.5;
+            animation: wave 7s linear infinite;
+        }
+
+        .wave:nth-child(3) {
+            bottom: 20px;
+            opacity: 0.2;
+            animation: wave 5s linear infinite;
+        }
+
+        /* Wave Keyframe Animation */
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 10;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #startup-modal {
+        top: 100px; /* Moves it down */
+        position: absolute; /* Overrides the default */
+        }
+        .modal-content {
+            background-color: #2a3d5c;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: #7abfd6;
+        }
+        
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #e0e6f0;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #4d6d9a;
+            border-radius: 5px;
+            background-color: #192841;
+            color: white;
+            font-size: 16px;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #7abfd6;
+        }
+        
+        .submit-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .submit-btn:hover {
+            background-color: #90cfe5;
+        }
+        
+        /* Detail view modal */
+        .detail-modal-content {
+            background-color: #2a3d5c;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .detail-header {
+            margin-bottom: 25px;
+        }
+        
+        .detail-title {
+            font-size: 28px;
+            color: #7abfd6;
+            margin-bottom: 5px;
+        }
+        
+        .detail-section {
+            margin-bottom: 20px;
+        }
+        
+        .detail-label {
+            font-size: 16px;
+            color: #90cfe5;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 18px;
+            color: white;
+            line-height: 1.5;
+        }
+        
+        .detail-email {
+            color: #7abfd6;
+            text-decoration: none;
+        }
+        
+        .detail-email:hover {
+            text-decoration: underline;
+        }
+
+        .detail-website {
+            color: #7abfd6;
+            text-decoration: none;
+        }
+        
+        .detail-website:hover {
+            text-decoration: underline;
+        }
+        
+        .detail-date {
+            font-size: 14px;
+            color: #a0b0c5;
+            margin-top: 25px;
+            text-align: right;
+        }
+        
+        .detail-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .detail-edit-btn, .detail-close-btn {
+            background-color: #7abfd6;
+            color: #192841;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .detail-edit-btn:hover, .detail-close-btn:hover {
+            background-color: #90cfe5;
+        }
+        
+        .detail-close-btn {
+            background-color: transparent;
+            border: 2px solid #7abfd6;
+            color: #7abfd6;
+        }
+        
+        .detail-close-btn:hover {
+            background-color: rgba(122, 191, 214, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .startup-item {
+                padding: 8px 15px;
+            }
+            
+            .startup-number {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+            
+            .startup-name {
+                font-size: 16px;
+            }
+            
+            .edit-btn {
+                padding: 8px 15px;
+                font-size: 16px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+        }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="Logo.png" alt="Startup Sphere Logo">
+      <span class="logo-text">STARTUP SPHERE</span>
+    </div>
+  </header>
+
+  <main>
+    <h1>Your Uploaded Startups</h1>
+    <div class="startup-list" id="startup-list"></div>
+    <button class="add-btn" id="add-startup-btn">+ Add New Startup</button>
+  </main>
+
+  <div class="wave-container">
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+  </div>
+
+  <div class="modal" id="startup-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modal-title">Add New Startup</h2>
+        <button class="close-button" id="close-modal">&times;</button>
+      </div>
+      <form id="startup-form">
+        <input type="hidden" id="startup-id">
+        <div class="form-group">
+          <label for="startup-name">Startup Name</label>
+          <input type="text" id="startup-name" required>
+        </div>
+        <div class="form-group">
+          <label for="startup-description">Description</label>
+          <textarea id="startup-description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="startup-college">College</label>
+          <select id="startup-college" required>
+            <option value="">-- Select College --</option>
+            <option value="MIT">MIT</option>
+            <option value="Bennett University">Bennett University</option>
+            <option value="Stanford">Stanford University</option>
+            <option value="Harvard">Harvard University</option>
+            <option value="UC Berkeley">UC Berkeley</option>
+            <option value="Caltech">Caltech</option>
+            <option value="CMU">Carnegie Mellon University</option>
+            <option value="Princeton">Princeton University</option>
+            <option value="Yale">Yale University</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="startup-email">E-Mail</label>
+          <input type="email" id="startup-email" required>
+        </div>
+        <div class="form-group">
+          <label for="startup-website">Website (optional)</label>
+          <input type="url" id="startup-website">
+        </div>
+        <div class="form-group">
+          <label for="startup-funding">Current Funding (optional)</label>
+          <input type="text" id="startup-funding">
+        </div>
+        <button type="submit" class="submit-btn" id="submit-btn">Save Startup</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal" id="detail-modal">
+    <div class="detail-modal-content">
+      <div class="detail-header">
+        <h2 class="detail-title" id="detail-title"></h2>
+      </div>
+      <div class="detail-section">
+        <div class="detail-label">Description</div>
+        <div class="detail-value" id="detail-description"></div>
+      </div>
+      <div class="detail-section" id="detail-college-section">
+        <div class="detail-label">College</div>
+        <div class="detail-value" id="detail-college"></div>
+      </div>
+      <div id="detail-email-section">
+        <div class="detail-label">Email</div>
+        <div class="detail-value">
+          <a id="detail-email-link" href="" target="_blank"></a>
+        </div>
+      </div>
+      <div class="detail-section" id="detail-website-section">
+        <div class="detail-label">Website</div>
+        <div class="detail-value">
+          <a href="#" class="detail-website" id="detail-website-link" target="_blank"></a>
+        </div>
+      </div>
+      <div class="detail-section" id="detail-funding-section">
+        <div class="detail-label">Current Funding</div>
+        <div class="detail-value" id="detail-funding"></div>
+      </div>
+      <div class="detail-date" id="detail-date"></div>
+      <div class="detail-actions">
+        <button class="detail-edit-btn" id="detail-edit-btn">Edit</button>
+        <button class="detail-close-btn" id="detail-close-btn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Assumes user authentication system already sets currentUser in localStorage
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const allStartups = JSON.parse(localStorage.getItem('allStartups')) || {};
+    let startups = currentUser ? (allStartups[currentUser.username] || []) : [];
+
+    const startupList = document.getElementById('startup-list');
+    const addStartupBtn = document.getElementById('add-startup-btn');
+    const modal = document.getElementById('startup-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const startupForm = document.getElementById('startup-form');
+    const modalTitle = document.getElementById('modal-title');
+    const submitBtn = document.getElementById('submit-btn');
+
+    const detailModal = document.getElementById('detail-modal');
+    const detailTitle = document.getElementById('detail-title');
+    const detailDescription = document.getElementById('detail-description');
+    const detailCollege = document.getElementById('detail-college');
+    const detailCollegeSection = document.getElementById('detail-college-section');
+    const detailEmailLink = document.getElementById('detail-email-link');
+    const detailEmailSection = document.getElementById('detail-email-section');
+    const detailWebsiteLink = document.getElementById('detail-website-link');
+    const detailWebsiteSection = document.getElementById('detail-website-section');
+    const detailFunding = document.getElementById('detail-funding');
+    const detailFundingSection = document.getElementById('detail-funding-section');
+    const detailDate = document.getElementById('detail-date');
+    const detailEditBtn = document.getElementById('detail-edit-btn');
+    const detailCloseBtn = document.getElementById('detail-close-btn');
+
+    const startupIdField = document.getElementById('startup-id');
+    const startupNameField = document.getElementById('startup-name');
+    const startupDescriptionField = document.getElementById('startup-description');
+    const startupCollegeField = document.getElementById('startup-college');
+    const startupEmailField = document.getElementById('startup-email');
+    const startupWebsiteField = document.getElementById('startup-website');
+    const startupFundingField = document.getElementById('startup-funding');
+
+    function displayStartups() {
+      startupList.innerHTML = '';
+      if (startups.length === 0) {
+        const emptyMessage = document.createElement('p');
+        emptyMessage.textContent = 'No startups added yet. Click the button below to add your first startup.';
+        emptyMessage.style.textAlign = 'center';
+        emptyMessage.style.color = '#7abfd6';
+        startupList.appendChild(emptyMessage);
+        return;
+      }
+      startups.forEach((startup, index) => {
+        const startupItem = document.createElement('div');
+        startupItem.className = 'startup-item';
+        startupItem.setAttribute('data-index', index);
+        startupItem.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('edit-btn')) viewStartupDetails(index);
+        });
+        const startupLeft = document.createElement('div');
+        startupLeft.className = 'startup-left';
+        const number = document.createElement('div');
+        number.className = 'startup-number';
+        number.textContent = index + 1;
+        const name = document.createElement('div');
+        name.className = 'startup-name';
+        name.textContent = startup.name || 'Untitled Startup';
+        const editBtn = document.createElement('button');
+        editBtn.className = 'edit-btn';
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          editStartup(index);
+        });
+        startupLeft.appendChild(number);
+        startupLeft.appendChild(name);
+        startupItem.appendChild(startupLeft);
+        startupItem.appendChild(editBtn);
+        startupList.appendChild(startupItem);
+      });
+    }
+
+    function viewStartupDetails(index) {
+      const startup = startups[index];
+      detailTitle.textContent = startup.name || 'Untitled Startup';
+      detailDescription.textContent = startup.description || 'No description provided.';
+      detailCollege.textContent = startup.college || '';
+      detailCollegeSection.style.display = startup.college ? 'block' : 'none';
+      detailEmailLink.textContent = startup.email;
+      detailEmailLink.href = `mailto:${startup.email}`;
+      detailEmailSection.style.display = startup.email ? 'block' : 'none';
+      detailWebsiteLink.textContent = startup.website;
+      detailWebsiteLink.href = startup.website.startsWith('http') ? startup.website : 'https://' + startup.website;
+      detailWebsiteSection.style.display = startup.website ? 'block' : 'none';
+      detailFunding.textContent = startup.funding;
+      detailFundingSection.style.display = startup.funding ? 'block' : 'none';
+      detailDate.textContent = startup.dateUpdated ? `Last updated: ${new Date(startup.dateUpdated).toLocaleString()}` : '';
+      detailDate.style.display = startup.dateUpdated ? 'block' : 'none';
+      detailEditBtn.onclick = () => { closeDetailModal(); editStartup(index); };
+      openDetailModal();
+    }
+
+    function addStartup() {
+      modalTitle.textContent = 'Add New Startup';
+      submitBtn.textContent = 'Save Startup';
+      startupIdField.value = '';
+      startupForm.reset();
+      openModal();
+    }
+
+    function editStartup(index) {
+      const startup = startups[index];
+      modalTitle.textContent = 'Edit Startup';
+      submitBtn.textContent = 'Update Startup';
+      startupIdField.value = index;
+      startupNameField.value = startup.name || '';
+      startupDescriptionField.value = startup.description || '';
+      startupCollegeField.value = startup.college || '';
+      startupEmailField.value = startup.email || '';
+      startupWebsiteField.value = startup.website || '';
+      startupFundingField.value = startup.funding || '';
+      openModal();
+    }
+
+    function saveStartup(event) {
+      event.preventDefault();
+      const startup = {
+        name: startupNameField.value.trim(),
+        description: startupDescriptionField.value.trim(),
+        college: startupCollegeField.value.trim(),
+        email: startupEmailField.value.trim(),
+        website: startupWebsiteField.value.trim(),
+        funding: startupFundingField.value.trim(),
+        dateUpdated: new Date().toISOString()
+      };
+      const startupId = startupIdField.value;
+      if (startupId === '') startups.push(startup);
+      else startups[parseInt(startupId)] = startup;
+      allStartups[currentUser.username] = startups;
+      localStorage.setItem('allStartups', JSON.stringify(allStartups));
+      displayStartups();
+      closeModal();
+    }
+
+    function openModal() { modal.style.display = 'flex'; }
+    function closeModal() { modal.style.display = 'none'; }
+    function openDetailModal() { detailModal.style.display = 'flex'; }
+    function closeDetailModal() { detailModal.style.display = 'none'; }
+
+    addStartupBtn.addEventListener('click', addStartup);
+    closeModalBtn.addEventListener('click', closeModal);
+    startupForm.addEventListener('submit', saveStartup);
+    detailCloseBtn.addEventListener('click', closeDetailModal);
+
+    window.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+      if (event.target === detailModal) closeDetailModal();
+    });
+
+    displayStartups();
+  </script>
+</body>
+</html>
